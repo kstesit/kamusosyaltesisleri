@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@media(min-width:951px){.footer-grid{grid-template-columns:1.35fr repeat(3,1fr) 1.6fr!important;gap:35px!important}.footer-contact p{max-width:340px!important}}
+
 /* Keep the footer logo consistent with the green horizontal site logo. */
 .site-footer .brand{color:var(--ink)!important}.site-footer .brand-mark{background:var(--teal)!important;color:#fff!important}
 
