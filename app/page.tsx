@@ -15,6 +15,21 @@ const facilities: Facility[] = [
   { name: "Bursa Orduevi", city: "Bursa", district: "Osmangazi", type: "Orduevi", price: "900 TL’den", tags: ["Merkezde", "Lokanta", "Ulaşım"], phone: "0224 000 00 04", verified: "Bu hafta güncellendi" },
 ];
 const categories = ["Tümü", "Öğretmenevi", "Polisevi", "Misafirhane", "Orduevi"] as const;
+const cities = [
+  { name: "İstanbul", image: "url(https://images.unsplash.com/photo-1608319195999-a698b199e3ce?auto=format&fit=crop&w=900&q=80)" },
+  { name: "Ankara", image: "url(https://images.unsplash.com/photo-1698739630811-fc2a1c0f62c7?auto=format&fit=crop&w=900&q=80)" },
+  { name: "İzmir", image: "url(https://images.unsplash.com/photo-1681938671016-9fceb5f483a3?auto=format&fit=crop&w=900&q=80)" },
+  { name: "Bursa", image: "linear-gradient(135deg, #234b42, #8aa380 55%, #d8c59c)" },
+  { name: "Antalya", image: "linear-gradient(135deg, #066b8a, #52b6d5 49%, #d6a86e)" },
+  { name: "Gaziantep", image: "linear-gradient(135deg, #71462e, #c8834a 53%, #ead0a5)" },
+  { name: "Diyarbakır", image: "linear-gradient(135deg, #313d38, #5e775e 55%, #a98f64)" },
+  { name: "Van", image: "linear-gradient(135deg, #1a5c83, #66b9d7 52%, #e4eef0)" },
+  { name: "Muğla", image: "linear-gradient(135deg, #17677b, #60b9c0 50%, #d6d29c)" },
+  { name: "Trabzon", image: "linear-gradient(135deg, #1d4f4b, #5e8e7e 48%, #b1bd8c)" },
+  { name: "Konya", image: "linear-gradient(135deg, #4d5f47, #a7ad6b 55%, #d8c680)" },
+  { name: "Kayseri", image: "linear-gradient(135deg, #34536b, #849ca9 52%, #e0e5df)" },
+  { name: "Mersin", image: "linear-gradient(135deg, #176a89, #5eb8cc 55%, #e6d4a1)" },
+];
 
 export default function Home() {
   const [query, setQuery] = useState("");
@@ -37,7 +52,7 @@ export default function Home() {
     setNotice("Konum izniyle yakın tesisler burada sıralanacak. Şimdilik örnek tesisleri görüntülüyorsunuz.");
     document.getElementById("tesisler")?.scrollIntoView({ behavior: "smooth" });
   }
-  const quickSearch = (value: string) => { setQuery(value); setNotice(`${value}’daki tesisler listeleniyor.`); };
+  const quickSearch = (value: string) => { setQuery(value); setNotice(`${value}’daki tesisler listeleniyor.`); document.getElementById("tesisler")?.scrollIntoView({ behavior: "smooth" }); };
   return <main>
     <header className="site-header">
       <a className="brand" href="#ana-sayfa" aria-label="Kamu Sosyal Tesisleri ana sayfa"><span className="brand-mark" aria-hidden="true">K</span><span>Kamu Sosyal<br /><strong>Tesisleri</strong></span></a>
@@ -52,6 +67,7 @@ export default function Home() {
       <div className="quick-links" aria-label="Popüler aramalar"><span>Popüler:</span><button onClick={() => quickSearch("Ankara")}>Ankara</button><button onClick={() => quickSearch("İzmir")}>İzmir</button><button onClick={() => quickSearch("Antalya")}>Antalya</button></div>
     </div><aside className="hero-card" aria-label="Hızlı tesis bulma bilgisi"><div className="map-orb"><span>⌖</span></div><div className="route-line route-one" /><div className="route-line route-two" /><div className="floating-pin pin-one">⌖</div><div className="floating-pin pin-two">⌖</div><div className="nearby-card"><span className="card-icon">⌖</span><div><small>Konumuna göre</small><strong>Yakın tesisleri keşfet</strong></div><button type="button" onClick={showNearby} aria-label="Yakındaki tesisleri göster">→</button></div></aside></section>
     <section className="trust-strip" aria-label="Platform özellikleri"><div><strong>81</strong><span>şehirde tesis</span></div><div><strong>4</strong><span>tesis türü</span></div><div><strong>1 tık</strong><span>telefon ve yol tarifi</span></div><div><strong>Güncel</strong><span>bilgi tarihi görünür</span></div></section>
+    <section className="cities-section" aria-labelledby="popular-cities-title"><p className="section-kicker">Şehirler</p><h2 id="popular-cities-title">Popüler Şehirler</h2><p className="cities-copy">En çok aranan illerdeki kamu tesislerini hemen keşfedin.</p><div className="city-grid">{cities.map((city) => <button className="city-card" key={city.name} onClick={() => quickSearch(city.name)} style={{ backgroundImage: city.image }}><span>{city.name}</span><small>Tesisleri keşfet <b aria-hidden="true">→</b></small></button>)}</div></section>
     <section className="facilities-section" id="tesisler"><div className="section-heading"><div><p className="section-kicker">Hızlı keşif</p><h2>Aradığın tesise<br />hemen ulaş.</h2></div><button className="nearby-button" type="button" onClick={showNearby}>⌖ Bana yakın tesisler</button></div><div className="filter-row" aria-label="Tesis türü filtresi">{categories.map((item) => <button key={item} className={category === item ? "active" : ""} onClick={() => setCategory(item)}>{item}</button>)}</div><p className="result-note" aria-live="polite">{notice}</p><div className="facility-grid">{visibleFacilities.map((facility) => <article className="facility-card" key={facility.name}><div className="facility-visual"><span>{facility.city.slice(0, 1)}</span><p>{facility.city}<br /><small>{facility.district}</small></p></div><div className="facility-info"><div className="card-top"><span className="type-pill">{facility.type}</span>{facility.distance && <span className="distance">⌖ {facility.distance}</span>}</div><h3>{facility.name}</h3><p className="location">{facility.district}, {facility.city}</p><div className="tags">{facility.tags.map((tag) => <span key={tag}>{tag}</span>)}</div><div className="card-bottom"><div><strong>{facility.price}</strong><small>{facility.verified}</small></div><a href={`tel:${facility.phone.replaceAll(" ", "")}`} aria-label={`${facility.name} tesisini ara`}>Ara</a></div></div></article>)}</div>{visibleFacilities.length === 0 && <div className="empty-state">Bu aramaya uygun örnek tesis bulunamadı. Farklı bir şehir veya tesis türü deneyin.</div>}</section>
     <section className="how-section" id="nasil-calisir"><div className="how-intro"><p className="section-kicker">Kolay ve şeffaf</p><h2>Yolculuğun<br />daha rahat.</h2><p>İhtiyacın olan bilgiye, karmaşık ekranlar olmadan ulaşırsın.</p></div><ol><li><span>01</span><h3>Ara ve filtrele</h3><p>Şehir, ilçe veya tesis türüne göre seçenekleri daralt.</p></li><li><span>02</span><h3>Bilgileri karşılaştır</h3><p>Fiyat, kabul koşulları, imkânlar ve güncelleme tarihini gör.</p></li><li><span>03</span><h3>Hemen iletişime geç</h3><p>Telefon et veya yol tarifini aç; güncel müsaitliği tesisten teyit et.</p></li></ol></section>
     <section className="update-section" id="guncel"><div><p className="section-kicker">Güvenilir rehber</p><h2>Bilginin tarihi de<br />kendisi kadar önemli.</h2></div><p>Fiyatlar ve kabul koşulları değişebilir. Bu nedenle her tesiste kaynak ve son güncelleme bilgisini görünür tutmayı hedefliyoruz. Kesin bilgi için her zaman tesisle doğrudan görüşün.</p></section>
