@@ -15,7 +15,7 @@ const facilities: Facility[] = [
   { name: "Bursa Orduevi", city: "Bursa", district: "Osmangazi", type: "Orduevi", price: "900 TL’den", tags: ["Merkezde", "Lokanta", "Ulaşım"], phone: "0224 000 00 04", verified: "Bu hafta güncellendi" },
 ];
 const categories = ["Tümü", "Öğretmenevi", "Polisevi", "Misafirhane", "Orduevi"] as const;
-const cities = ["İstanbul", "Ankara", "İzmir", "Bursa", "Antalya", "Gaziantep", "Diyarbakır", "Van", "Muğla", "Trabzon", "Konya", "Kayseri", "Mersin"];
+const cities = ["İstanbul", "Ankara", "İzmir", "Bursa", "Antalya", "Gaziantep", "Diyarbakır", "Van", "Muğla", "Trabzon", "Kayseri", "Mersin"];
 
 export default function Home() {
   const [query, setQuery] = useState("");
