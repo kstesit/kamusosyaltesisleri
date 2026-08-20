@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+/* Keep the footer logo consistent with the green horizontal site logo. */
+.site-footer .brand{color:var(--ink)!important}.site-footer .brand-mark{background:var(--teal)!important;color:#fff!important}
+
 /* Footer links must be stacked within each column. */
 .footer-grid>div>a{display:block;margin:0 0 14px;color:#fff;font-size:13px;cursor:pointer}.footer-grid>div>a:hover{color:#9de5d9}@media(max-width:620px){.footer-grid>div>a{font-size:12px}}
 
